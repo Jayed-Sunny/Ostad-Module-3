@@ -1,0 +1,71 @@
+<!-- 7. JS Common Events:
+Implement a webpage with the following functionality:
+a. When the user clicks anywhere on the page, display an alert with the coordinates (x, y) of the click.
+b. When the user presses any key on the keyboard, display an alert with the key code of the pressed key.
+c. When the user moves the mouse over an image, change the image source to another image of your choice. -->
+<!-- --------------------------------------------------------------------------------------------------- -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Event Examples</title>
+    <style>
+      #image {
+        width: 300px;
+        height: 300px;
+        transition: 0.5s;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script>
+      // Event handler for click event
+      function handleClick(event) {
+        var x = event.clientX;
+        var y = event.clientY;
+        alert("Clicked at coordinates (x, y): " + x + ", " + y);
+      }
+
+      // Event handler for keydown event
+      function handleKeyDown(event) {
+        var keyCode = event.keyCode || event.which;
+        alert("Pressed key with code: " + keyCode);
+      }
+
+      // Event handler for mouseover event
+      const gallery = ["anozjF6uqI0", "ok9Q_A46St4", "USK5WvXLrX4"];
+      let imgIdx = 0;
+
+      function cycleImage() {
+        if (imgIdx === gallery.length - 1) {
+          imgIdx = 0;
+          return;
+        }
+        imgIdx += 1;
+      }
+
+      function handleMouseOver() {
+        var imageElement = document.getElementById("image");
+        console.log(imgIdx);
+        let imgUrl = `https://source.unsplash.com/${gallery[imgIdx]}`;
+        imageElement.src = imgUrl;
+        cycleImage();
+      }
+    </script>
+
+    <h1>Event Examples</h1>
+
+    <p>Click anywhere on the page.</p>
+    <p>Press any key on the keyboard.</p>
+    <p>Move the mouse over the image.</p>
+
+    <img id="image" src="images/image1.jpg" onmouseover="handleMouseOver()" />
+
+    <script>
+      // Attach event listeners
+      document.addEventListener("click", handleClick);
+      document.addEventListener("keydown", handleKeyDown);
+    </script>
+  </body>
+</html>
