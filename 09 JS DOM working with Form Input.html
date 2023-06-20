@@ -1,0 +1,132 @@
+<!-- 09.JS DOM Working with Form Input:
+Implement a webpage with a form that has the following fields:
+a. Name (text input)
+b. Email (email input)
+c. Password (password input)
+d. Confirm Password (password input)
+e. Submit (button)
+Implement JavaScript validation for the form fields:
+f. Name should not be empty and should contain only letters.
+g. Email should be a valid email address.
+h. Password should have a minimum length of 8 characters and contain at least one uppercase letter, one lowercase letter, and one digit.
+i. Confirm Password should match the Password field.
+j. Display appropriate error messages for invalid fields. -->
+<!-- ----------------------------------------------------------------------------- -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Example</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="myForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required><br>
+    <span id="nameError" class="error"></span><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required><br>
+    <span id="emailError" class="error"></span><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" required><br>
+    <span id="passwordError" class="error"></span><br>
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" required><br>
+    <span id="confirmPasswordError" class="error"></span><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    // JavaScript function to handle form submission
+    function handleSubmit(event) {
+      event.preventDefault(); // Prevent form from being submitted
+
+      // Get form field values
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("confirmPassword").value;
+
+      // Reset previous error messages
+      resetErrors();
+
+      // Validate name field
+      if (name === "") {
+        showError("nameError", "Name is required.");
+      } else if (!/^[a-zA-Z]+$/.test(name)) {
+        showError("nameError", "Name should contain only letters.");
+      }
+
+      // Validate email field
+      if (email === "") {
+        showError("emailError", "Email is required.");
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+        showError("emailError", "Invalid email address.");
+      }
+
+      // Validate password field
+      if (password === "") {
+        showError("passwordError", "Password is required.");
+      } else if (password.length < 8) {
+        showError("passwordError", "Password should have a minimum length of 8 characters.");
+      } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
+        showError("passwordError", "Password should contain at least one uppercase letter, one lowercase letter, and one digit.");
+      }
+
+      // Validate confirm password field
+      if (confirmPassword === "") {
+        showError("confirmPasswordError", "Confirm Password is required.");
+      } else if (confirmPassword !== password) {
+        showError("confirmPasswordError", "Passwords do not match.");
+      }
+
+      // Submit the form if no errors
+      if (!hasErrors()) {
+        // Display form data or submit the form to a server
+        console.log("Name:", name);
+        console.log("Email:", email);
+        console.log("Password:", password);
+        document.getElementById("myForm").submit();
+      }
+    }
+
+    // Function to display error messages
+    function showError(elementId, message) {
+      var errorElement = document.getElementById(elementId);
+      errorElement.textContent = message;
+    }
+
+    // Function to reset error messages
+    function resetErrors() {
+      var errorElements = document.getElementsByClassName("error");
+      for (var i = 0; i < errorElements.length; i++) {
+        errorElements[i].textContent = "";
+      }
+    }
+
+    // Function to check if there are any error messages
+    function hasErrors() {
+      var errorElements = document.getElementsByClassName("error");
+      for (var i = 0; i < errorElements.length; i++) {
+        if (errorElements[i].textContent !== "") {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Adding an event listener to the form
+    var form = document.getElementById("myForm");
+    form.addEventListener("submit", handleSubmit);
+  </script>
+
+</body>
+</html>

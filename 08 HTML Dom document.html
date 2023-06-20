@@ -2,3 +2,27 @@
 a. Create a webpage with a button and a paragraph element.
 b. Implement a JavaScript function that changes the text content of the paragraph element to "Button Clicked!" when the button is clicked. -->
 <!-- ------------------------------------------------------------------------ -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Button Click Example</title>
+</head>
+<body>
+
+  <button id="myButton">Click me</button>
+  <p id="myParagraph">Text to be changed</p>
+
+  <script>
+    // JavaScript function to handle button click event
+    function handleClick() {
+      var paragraph = document.getElementById("myParagraph");
+      paragraph.textContent = "Button Clicked!";
+    }
+
+    // Adding an event listener to the button
+    var button = document.getElementById("myButton");
+    button.addEventListener("click", handleClick);
+  </script>
+
+</body>
+</html>
